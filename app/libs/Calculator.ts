@@ -31,8 +31,15 @@ export class Calculator {
   }
 
   solve() {
-    let expression = this.dashboard.value
-    this.dashboard.value = evaluate(expression)
+    try {
+      let expression = this.dashboard.value;
+      if (!expression || /[^0-9+\-*/(). ]/.test(expression)) {
+        throw new Error("Invalid expression");
+      }
+      this.dashboard.value = eval(expression); // Use eval or a proper math library if needed
+    } catch (error) {
+      this.dashboard.value = "Error";
+    }
   }
 
   clr() {
